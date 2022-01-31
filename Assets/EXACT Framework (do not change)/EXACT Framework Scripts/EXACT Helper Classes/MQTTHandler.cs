@@ -48,7 +48,7 @@ namespace ExactFramework
             if (!debug) { // Added DS..
                 connectThread = new Thread(() => {
                  // DS client = new MqttClient(IPAddress.Parse(hostaddress), port, false, null); //Initializing the MQTT Class with ip, port, SSL level.
-                  client = new MqttClient(IPAddress.Parse(hostaddress), port, false, null, null, MqttSslProtocols.None); //Initializing the MQTT Class with ip, port, SSL level.
+                  client = new MqttClient(hostaddress, port, false, null, null, MqttSslProtocols.None); //Initializing the MQTT Class with ip, port, SSL level.
                   client.MqttMsgPublishReceived += HandleMQTTMessage; //Setting up the function triggered on received messages
                   Debug.Log("Connecting: ");
                   client.Connect("Unity_Client", null, null, false, MqttMsgConnect.QOS_LEVEL_AT_MOST_ONCE, true,
