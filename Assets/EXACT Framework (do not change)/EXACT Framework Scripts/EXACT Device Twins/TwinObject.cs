@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+
+using System;
+using System.Collections.Generic;
 
 namespace ExactFramework
 {
-
     ///<summary>
     ///Digital Twin object class used as a base for all Digital Twin tyoe objects. Can have multiple components connected to it. 
     ///Serves as the base for the digital representation of a physical object and holds a reference to the MQTT message handler.
@@ -75,13 +73,13 @@ namespace ExactFramework
         ///</summary>
         private Dictionary<string, UnityEvent> eventList = new Dictionary<string, UnityEvent>();
 
-   //     public bool UseDeviceName { get => useDeviceName; set => useDeviceName = value; }
-   //     public bool UseDeviceName1 { get => useDeviceName; set => useDeviceName = value; }
+        //     public bool UseDeviceName { get => useDeviceName; set => useDeviceName = value; }
+        //     public bool UseDeviceName1 { get => useDeviceName; set => useDeviceName = value; }
 
         // Use this for initialization
         protected virtual void Start()
         {
-           // pingCount = 0;
+            // pingCount = 0;
             TwinStart();
             configNameDoNotChange = configName;
         }
@@ -94,29 +92,30 @@ namespace ExactFramework
         // Update is called once per frame. Holds the simple ping messaging handling.
         protected virtual void Update()
         {
-        /*    if (linked)
-            {
-                pingTime += Time.deltaTime;
-                if (pingTime > 15)
+            /*    if (linked)
                 {
-                    if (pingCount >= 1)
+                    pingTime += Time.deltaTime;
+                    if (pingTime > 15)
                     {
-                        linked = false;
-                        Debug.Log("Tile " + deviceID + " disconnected...");
+                        if (pingCount >= 1)
+                        {
+                            linked = false;
+                            Debug.Log("Tile " + deviceID + " disconnected...");
+                        }
+                        else
+                        {
+                            SendPingMessage();
+                            pingCount++;
+                        }
+                        pingTime = 0;
                     }
-                    else
-                    {
-                        SendPingMessage();
-                        pingCount++;
-                    }
-                    pingTime = 0;
-                }
-            }  */  // no need..
+                }  */  // no need..
             TwinUpdate();
         }
 
         protected virtual void TwinUpdate()
         {
+
         }
 
         ///<summary>
@@ -270,7 +269,7 @@ namespace ExactFramework
         ///</summary>
         public void SendPingMessage()
         {
-       //     SendDeviceMessage(deviceID + "/ping", true);
+            //     SendDeviceMessage(deviceID + "/ping", true);
         }
 
         ///<summary>
@@ -380,7 +379,7 @@ namespace ExactFramework
             this.deviceID_MACDoNotChange = deviceID;
             SetLinkStatus(true);
             DeviceIsConnected();
-           // SendPingMessage();
+            // SendPingMessage();
         }
 
         public virtual void DeviceIsConnected()
@@ -449,8 +448,8 @@ namespace ExactFramework
         ///</summary>
         public void PingResponse()
         {
-         //   pingCount = 0;
-         //   pingTime = 0;  // DS ?????
+            //   pingCount = 0;
+            //   pingTime = 0;  // DS ?????
         }
 
         /// <summary>
@@ -600,7 +599,9 @@ namespace ExactFramework
             {
                 List<TwinObject> clonedList = new List<TwinObject>(mqttHandler.GetTwinObjectList());
                 return clonedList;  // Shallow clone, but that is fine...
-            } else {
+            }
+            else
+            {
                 return new List<TwinObject>();
             }
         }

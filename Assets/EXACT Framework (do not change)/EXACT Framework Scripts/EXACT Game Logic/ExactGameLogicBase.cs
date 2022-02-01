@@ -1,8 +1,6 @@
-﻿using ExactFramework;
-using System;
-using System.Collections;
+﻿using UnityEngine;
+
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ExactFramework
 {
@@ -66,12 +64,12 @@ namespace ExactFramework
 
         public virtual void GameLogicUpdate()
         {
-         //   Debug.Log("Game update");
+            //   Debug.Log("Game update");
         }
 
 
 
-    public List<T> GetDevicesWithBehavior<T>()
+        public List<T> GetDevicesWithBehavior<T>()
         {
             List<T> listOfObjects = new List<T>();
             foreach (TwinObject to in devicesInScene)

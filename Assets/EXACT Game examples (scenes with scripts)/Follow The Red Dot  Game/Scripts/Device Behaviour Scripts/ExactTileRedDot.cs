@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-namespace ExactFramework {
+namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a device
     ///</summary>
@@ -18,7 +15,6 @@ namespace ExactFramework {
     //
     public class ExactTileRedDot : ExactTileBase
     {
-
         public bool tileIsActive = false;
 
         // Start is called before the first frame update
@@ -39,7 +35,7 @@ namespace ExactFramework {
         }
 
         public override void EventFromGameLogic(string eventName, string eventData)
-        {  
+        {
             if (eventName == "MakeActive")
             {
                 // SetColor(new Color(0.05f,0.0f,0.0f));
@@ -48,7 +44,7 @@ namespace ExactFramework {
                 tileIsActive = true;
                 this.SetRingColor(Color.red);
                 this.PlayTone(500, 50);
-               
+
 
             }
             else if (eventName == "MakePassive")

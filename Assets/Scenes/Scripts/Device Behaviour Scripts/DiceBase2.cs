@@ -1,9 +1,6 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+
 using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
-using UnityEditor;
 
 namespace ExactFramework
 {
@@ -18,33 +15,33 @@ namespace ExactFramework
     //   public void SendEventToGameLogic(string eventName, string eventData)
     //
     //
-/*
-R1,042E58F2744C80
-R2,042156F2744C80
-R3,042A57F2744C80
-R4,041C56F2744C80
-R5,043358F2744C80
-R6,042656F2744C80
-B1,047157F2744C80
-B2,046159F2744C80
-B3,045759F2744C80
-B4,046558F2744C80
-B5,045C59F2744C80
-B6,046C57F2744C80
-Y1,045259F2744C80
-Y2,044859F2744C80
-Y3,043E59F2744C80
-Y4,043A58F2744C80
-Y5,044D59F2744C80
-Y6,044359F2744C80
-*/
+    /*
+    R1,042E58F2744C80
+    R2,042156F2744C80
+    R3,042A57F2744C80
+    R4,041C56F2744C80
+    R5,043358F2744C80
+    R6,042656F2744C80
+    B1,047157F2744C80
+    B2,046159F2744C80
+    B3,045759F2744C80
+    B4,046558F2744C80
+    B5,045C59F2744C80
+    B6,046C57F2744C80
+    Y1,045259F2744C80
+    Y2,044859F2744C80
+    Y3,043E59F2744C80
+    Y4,043A58F2744C80
+    Y5,044D59F2744C80
+    Y6,044359F2744C80
+    */
 
 
     public class DiceBase2 : ExactTileBase
     {
 
         Dictionary<string, int> yellowDice = new Dictionary<string, int>
-        { 
+        {
             { "04:52:59:F2:74:4C:80", 1 },
             { "04:48:59:F2:74:4C:80", 2 },
             { "04:3E:59:F2:74:4C:80", 3 },
@@ -72,7 +69,7 @@ Y6,044359F2744C80
         }
 
         public override void EventFromGameLogic(string eventName, string eventData)
-        {  
+        {
         }
 
         public override void OnTapped()

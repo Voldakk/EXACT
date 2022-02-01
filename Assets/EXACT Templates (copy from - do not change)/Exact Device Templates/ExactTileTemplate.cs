@@ -13,7 +13,6 @@
     //
     public class ExactTileTemplate : ExactTileBase
     {
-
         // Start is called before the first frame update
         public override void DeviceStart()
         {
@@ -31,7 +30,8 @@
         }
 
         public override void EventFromGameLogic(string eventName, string eventData)
-        {  /*
+        {
+            /*
             if (eventName == "DoSomething")
             {
             } 
@@ -40,14 +40,17 @@
 
         public override void OnTapped()
         {
+
         }
 
         public override void OnRFIDEnter(string RFIDInHex)
-        {  
+        {
+
         }
 
         public override void OnRFIDLeave(string RFIDInHex)
         {
+
         }
     }
 }

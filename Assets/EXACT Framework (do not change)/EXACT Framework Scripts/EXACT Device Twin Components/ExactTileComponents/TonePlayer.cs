@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ExactFramework
 {
@@ -10,7 +8,6 @@ namespace ExactFramework
     ///</summary>
     public class TonePlayer : DeviceComponent
     {
-
         ///<summary>
         ///Sends a frequency to the physical tone player, making it play a continuous tone at that frequency.
         ///</summary>

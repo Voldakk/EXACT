@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using UnityEditor;
 
 namespace ExactFramework
@@ -44,15 +40,17 @@ namespace ExactFramework
 
         public override void DeviceJustDisconnected()
         {
-            if (tileIsActive) {
+            if (tileIsActive)
+            {
                 if (RFID_Enabled)
                 {
                     SendEventToGameLogic("RFID_Enter", "Disconnected");
-                } else
+                }
+                else
                 {
                     SendEventToGameLogic("Tapped", "Disconnected");  // Fake a tapped event..
                 }
-                
+
             }
         }
 
@@ -75,7 +73,7 @@ namespace ExactFramework
                 this.PlayTone(500, 50);
                 EditorApplication.Beep();
                 StartFading(GetColor(), 80, 0, eventData);
-              //  StartFading(Color.green, intensity, 0, 3000);
+                //  StartFading(Color.green, intensity, 0, 3000);
                 tileIsActive = false;
             }
             else if (eventName == "Enable_RFID")

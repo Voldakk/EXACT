@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-namespace ExactFramework {
+namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a device
     ///</summary>
@@ -49,7 +46,7 @@ namespace ExactFramework {
 
         public override void OnRFIDEnter(string RFIDInHex)
         {
-            SetColor(new Color(1,1,0));
+            SetColor(new Color(1, 1, 0));
         }
 
         public override void OnRFIDLeave(string RFIDInHex)

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using ExactFramework;
 
 namespace ExactFramework
 {
@@ -31,7 +28,8 @@ namespace ExactFramework
         ///Sets the component's ID to be used for message building and updating the component on incoming messages.
         ///</summary>
         ///<param name="id">ID/name of the component.</param>
-        public void SetComponentID(string id){
+        public void SetComponentID(string id)
+        {
             this.id = id;
         }
 
@@ -39,7 +37,8 @@ namespace ExactFramework
         ///Gets the component's ID.
         ///</summary>
         ///<returns>String ID of component.</returns>
-        public string GetComponentID(){
+        public string GetComponentID()
+        {
             return id;
         }
 
@@ -49,6 +48,6 @@ namespace ExactFramework
         ///</summary>
         ///<param name="eventType">Name of the event type on the component.</param>
         ///<param name="payload">Payload of the MQTT message</param>
-        public virtual void UpdateComponent(string eventType, byte[] payload){}
+        public virtual void UpdateComponent(string eventType, byte[] payload) { }
     }
 }

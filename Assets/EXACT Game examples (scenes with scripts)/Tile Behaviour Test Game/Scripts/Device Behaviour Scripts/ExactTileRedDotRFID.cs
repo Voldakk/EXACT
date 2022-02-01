@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-namespace ExactFramework {
+namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a device
     ///</summary>
@@ -39,10 +36,10 @@ namespace ExactFramework {
         }
 
         public override void EventFromGameLogic(string eventName, string eventData)
-        {  
+        {
             if (eventName == "MakeActive")
             {
-                 SetColor(new Color(0.05f,0.0f,0.0f));
+                SetColor(new Color(0.05f, 0.0f, 0.0f));
                 //SetColor(Color.red);
                 tileIsActive = true;
             }
@@ -55,25 +52,24 @@ namespace ExactFramework {
 
         public override void OnTapped()
         {
-       //     if (tileIsActive)
-       //     {
-       //         SendEventToGameLogic("Tapped", "");
-       //     }
+            //     if (tileIsActive)
+            //     {
+            //         SendEventToGameLogic("Tapped", "");
+            //     }
         }
-
 
         public override void OnRFIDEnter(string RFIDInHex)
         {
-                 if (tileIsActive)
-                 {
-                  SendEventToGameLogic("Tapped", "");
-                 }
+            if (tileIsActive)
+            {
+                SendEventToGameLogic("Tapped", "");
+            }
 
         }
 
         public override void OnRFIDLeave(string RFIDInHex)
         {
-       //     SetColor(new Color(0, 1, 1));
+            //     SetColor(new Color(0, 1, 1));
         }
     }
 }

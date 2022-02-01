@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace ExactFramework {
-
+namespace ExactFramework
+{
     // Used class methods:
     //   public void SetColor(Color)
     //   public void SetIntensity(int)
     //
- 
+
     public class ExactTileToggle : ExactTileBase
     {
 
@@ -27,8 +27,9 @@ namespace ExactFramework {
         public override void OnTapped()
         {
             redGreen = !redGreen;
-            if (redGreen) {
-                SetColor(Color.blue);  
+            if (redGreen)
+            {
+                SetColor(Color.blue);
             }
             else
             {

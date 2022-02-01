@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace ExactFramework
+﻿namespace ExactFramework
 {
     public class RFIDReader : DeviceComponent
     {
 
         byte[] lastReadID;
 
-        public byte[] GetLastReadID(){
+        public byte[] GetLastReadID()
+        {
             return lastReadID;
         }
 
@@ -19,7 +16,8 @@ namespace ExactFramework
             {
                 lastReadID = payload;
                 device.InvokeEvent("rfid_reader.rfid_enter");
-            } else if (eventType == "rfid_leave") //Subject to change
+            }
+            else if (eventType == "rfid_leave") //Subject to change
             {
                 lastReadID = payload;
                 device.InvokeEvent("rfid_reader.rfid_leave");

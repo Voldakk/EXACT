@@ -1,5 +1,4 @@
-﻿
-namespace ExactFramework
+﻿namespace ExactFramework
 {
     ///<summary>
     ///Class used by the MQTTHandler to hold data on the incoming messages.

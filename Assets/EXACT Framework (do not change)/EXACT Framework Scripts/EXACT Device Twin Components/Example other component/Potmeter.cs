@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExactFramework.Component.Examples
 {
@@ -36,10 +34,12 @@ namespace ExactFramework.Component.Examples
 
         public override void UpdateComponent(string eventType, byte[] payload)
         {
-            if(eventType == "value"){
+            if (eventType == "value")
+            {
                 int parsedValue = 0;
-                for(int i = 0; i<payload.Length; i++){
-                    parsedValue += (int)(payload[i] * Mathf.Pow(256,i));
+                for (int i = 0; i < payload.Length; i++)
+                {
+                    parsedValue += (int)(payload[i] * Mathf.Pow(256, i));
                 }
                 SetValue(parsedValue);
             }

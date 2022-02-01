@@ -1,9 +1,6 @@
-﻿using ExactFramework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+using System.Collections.Generic;
 
 namespace ExactFramework
 {
@@ -36,7 +33,6 @@ namespace ExactFramework
         {
 
         }
-
 
         public override void EventFromDevice(ExactTileBase exactTileBase, string eventName, string eventData)
         {

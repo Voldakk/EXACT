@@ -1,9 +1,6 @@
-﻿using ExactFramework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+using System.Collections.Generic;
 
 namespace ExactFramework
 {
@@ -49,10 +46,10 @@ namespace ExactFramework
             List<ExactTileBase> returnList = new List<ExactTileBase>();
             foreach (ExactTileBase tile in allDevices)
             {
-               if ((tile.configNameDoNotChange == "exactredtile")  && (tile.linked || debugMode))
-               {
+                if ((tile.configNameDoNotChange == "exactredtile") && (tile.linked || debugMode))
+                {
                     returnList.Add(tile);
-               }
+                }
             }
             return returnList;
         }
@@ -159,39 +156,10 @@ namespace ExactFramework
             }
             else if ((eventName == "RFID_Enter") && (gameState == 4))
             {
-              if (RFID_tags.ContainsKey(eventData)) {
-               if((RFID_tags[eventData] == RFID_color) || (eventData == "Disconnected")) {
-                List<ExactTileBase> clone = new List<ExactTileBase>(GetDotTileList()); // Make a clone
-                if (clone.Contains(exactTile))
+                if (RFID_tags.ContainsKey(eventData))
                 {
-                    clone.Remove(exactTile);
-                    ExactTileBase[] passiveDevices = clone.ToArray();
-                    debugArray(passiveDevices);
-                    if (passiveDevices.Length > 0)
+                    if ((RFID_tags[eventData] == RFID_color) || (eventData == "Disconnected"))
                     {
-                        System.Random r = new System.Random();
-                        int nextActive = r.Next(0, passiveDevices.Length);
-                        Debug.Log(nextActive);
-                        ExactTileBase nextActiveDevice = passiveDevices[nextActive];
-
-                        System.Random r2 = new System.Random();
-                        RFID_color = r2.Next(0, 2);  // 0..1
-                        Debug.Log("Random:" + RFID_color.ToString());
-                        nextActiveDevice.SetColor(RFID_colors[RFID_color]);
-                        SendEventToDevice(exactTile, "Disable_RFID", 0);
-                        SendEventToDevice(exactTile, "MakePassive", makePassiveSpeed);
-                        SendEventToDevice(nextActiveDevice, "MakeActive", makeActiveSpeed);
-                        SendEventToDevice(nextActiveDevice, "Enable_RFID", 0);
-                        activeTile = nextActiveDevice;
-                    }
-                }
-               }
-              }
-            }
-
-            else if ((eventName == "Tapped") && (gameState == 3))
-            {
-
                         List<ExactTileBase> clone = new List<ExactTileBase>(GetDotTileList()); // Make a clone
                         if (clone.Contains(exactTile))
                         {
@@ -212,9 +180,40 @@ namespace ExactFramework
                                 SendEventToDevice(exactTile, "Disable_RFID", 0);
                                 SendEventToDevice(exactTile, "MakePassive", makePassiveSpeed);
                                 SendEventToDevice(nextActiveDevice, "MakeActive", makeActiveSpeed);
+                                SendEventToDevice(nextActiveDevice, "Enable_RFID", 0);
                                 activeTile = nextActiveDevice;
                             }
                         }
+                    }
+                }
+            }
+
+            else if ((eventName == "Tapped") && (gameState == 3))
+            {
+
+                List<ExactTileBase> clone = new List<ExactTileBase>(GetDotTileList()); // Make a clone
+                if (clone.Contains(exactTile))
+                {
+                    clone.Remove(exactTile);
+                    ExactTileBase[] passiveDevices = clone.ToArray();
+                    debugArray(passiveDevices);
+                    if (passiveDevices.Length > 0)
+                    {
+                        System.Random r = new System.Random();
+                        int nextActive = r.Next(0, passiveDevices.Length);
+                        Debug.Log(nextActive);
+                        ExactTileBase nextActiveDevice = passiveDevices[nextActive];
+
+                        System.Random r2 = new System.Random();
+                        RFID_color = r2.Next(0, 2);  // 0..1
+                        Debug.Log("Random:" + RFID_color.ToString());
+                        nextActiveDevice.SetColor(RFID_colors[RFID_color]);
+                        SendEventToDevice(exactTile, "Disable_RFID", 0);
+                        SendEventToDevice(exactTile, "MakePassive", makePassiveSpeed);
+                        SendEventToDevice(nextActiveDevice, "MakeActive", makeActiveSpeed);
+                        activeTile = nextActiveDevice;
+                    }
+                }
             }
 
 
@@ -231,12 +230,13 @@ namespace ExactFramework
                 int time = 1 + 3 * (invSpeed - 1);
                 makeActiveSpeed = time * 1000;
                 makePassiveSpeed = time * 100;
-            } else if (eventName == "SetGameState")
+            }
+            else if (eventName == "SetGameState")
             {
                 Debug.Log("Game State:" + eventData.ToString());
                 if (eventData != gameState)
                 {
-                    if(eventData == 1)
+                    if (eventData == 1)
                     {
                         EndGame();
                     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExactFramework
 {
@@ -8,7 +7,7 @@ namespace ExactFramework
     ///</summary>
     public class LedRing : DeviceComponent
     {
-        
+
         ///<summary>
         ///Change this variable for a uniform color of the ring light.
         ///</summary>
@@ -39,7 +38,7 @@ namespace ExactFramework
         {
         }
 
-      
+
         ///<summary>
         ///Sets the uniform color of the ring light. Sends the color over MQTT to the device.
         ///</summary>
@@ -85,10 +84,10 @@ namespace ExactFramework
             Debug.Log("Ledring fade");
             Debug.Log(fadeColor.ToString());
             string colorString = ((byte)(fadeColor.r * 255)).ToString() +
-                          "/" +  ((byte)(fadeColor.g * 255)).ToString() +
+                          "/" + ((byte)(fadeColor.g * 255)).ToString() +
                           "/" + ((byte)(fadeColor.b * 255)).ToString() +
-                          "/" + from.ToString()+
-                          "/" + to.ToString()+
+                          "/" + from.ToString() +
+                          "/" + to.ToString() +
                           "/" + pulseLengthMs.ToString();
             device.SendActionMessage("led_ring/start_fading", colorString);
         }
@@ -118,6 +117,6 @@ namespace ExactFramework
         public Color GetColor()
         {
             return color;
-        }        
+        }
     }
 }

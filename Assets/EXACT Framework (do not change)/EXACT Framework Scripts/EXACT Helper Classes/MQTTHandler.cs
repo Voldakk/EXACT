@@ -1,13 +1,11 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System;
+
+using System.Threading;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Net;
-using System.Text;
+
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using System;
-using System.Threading;
-using ExactFramework;
 
 namespace ExactFramework
 {
@@ -45,17 +43,19 @@ namespace ExactFramework
         public MQTTHandler(string hostaddress = "127.0.0.1", int port = 1883, bool debug = false)
         {
             Debug.Log("Before thread: ");
-            if (!debug) { // Added DS..
-                connectThread = new Thread(() => {
-                 // DS client = new MqttClient(IPAddress.Parse(hostaddress), port, false, null); //Initializing the MQTT Class with ip, port, SSL level.
-                  client = new MqttClient(hostaddress, port, false, null, null, MqttSslProtocols.None); //Initializing the MQTT Class with ip, port, SSL level.
-                  client.MqttMsgPublishReceived += HandleMQTTMessage; //Setting up the function triggered on received messages
-                  Debug.Log("Connecting: ");
-                  client.Connect("Unity_Client", null, null, false, MqttMsgConnect.QOS_LEVEL_AT_MOST_ONCE, true,
-                                           "exact/all_devices/reset_all_components", "mqtt_broker", true, MqttMsgConnect.KEEP_ALIVE_PERIOD_DEFAULT);
-                  Debug.Log("Connected: ");
-                  client.Subscribe(new string[] { "exact/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE }); //Subscribing to the topic
-                  client.Publish("exact/all_devices/are_you_connected", new byte[] { 0 });
+            if (!debug)
+            { // Added DS..
+                connectThread = new Thread(() =>
+                {
+                    // DS client = new MqttClient(IPAddress.Parse(hostaddress), port, false, null); //Initializing the MQTT Class with ip, port, SSL level.
+                    client = new MqttClient(hostaddress, port, false, null, null, MqttSslProtocols.None); //Initializing the MQTT Class with ip, port, SSL level.
+                    client.MqttMsgPublishReceived += HandleMQTTMessage; //Setting up the function triggered on received messages
+                    Debug.Log("Connecting: ");
+                    client.Connect("Unity_Client", null, null, false, MqttMsgConnect.QOS_LEVEL_AT_MOST_ONCE, true,
+                                             "exact/all_devices/reset_all_components", "mqtt_broker", true, MqttMsgConnect.KEEP_ALIVE_PERIOD_DEFAULT);
+                    Debug.Log("Connected: ");
+                    client.Subscribe(new string[] { "exact/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE }); //Subscribing to the topic
+                    client.Publish("exact/all_devices/are_you_connected", new byte[] { 0 });
                 }); // Start the Thread
                 connectThread.Start();
             }
@@ -77,13 +77,14 @@ namespace ExactFramework
         ///<param name="payload">Payload of the MQTT message sent.</param>
         internal void SendDeviceMessage(string topic, byte[] payload)
         {
-            if (client != null) { 
-               client.Publish(topic, payload);
-               if (delay != 0)
-               {
-                   System.Threading.Thread.Sleep(delay);
-                   delay = 0;
-               }
+            if (client != null)
+            {
+                client.Publish(topic, payload);
+                if (delay != 0)
+                {
+                    System.Threading.Thread.Sleep(delay);
+                    delay = 0;
+                }
             }
         }
 
@@ -124,9 +125,9 @@ namespace ExactFramework
                         };
                         obj.actionMsgBuffer.Clear();
                     }
-                        // DS obj.actionMsgBuffer = new List<MessagePair>();
-                        // DS SendDeviceMessage(actionMessageString, payloads.ToArray());
-                    
+                    // DS obj.actionMsgBuffer = new List<MessagePair>();
+                    // DS SendDeviceMessage(actionMessageString, payloads.ToArray());
+
                     if (obj.getMsgBuffer.Count > 0)
                     {
                         delay = obj.getMsgBuffer.Count * 20;
@@ -152,7 +153,7 @@ namespace ExactFramework
             {
                 MessagePair message = msgBuffer[0];
                 msgBuffer.RemoveAt(0);
-                String[] topicSplit = {" "," "," "," "," "};
+                String[] topicSplit = { " ", " ", " ", " ", " " };
                 topicSplit = message.topic.Split('/');
                 if (topicSplit[0] == "exact")
                 {
@@ -175,10 +176,10 @@ namespace ExactFramework
                         {
                             DeviceValue(topicSplit, message.payload);
                         }
-                     //   else if (topicSplit[3] == "ping")
-                     //   {
-                     //       DevicePing(topicSplit[2]);
-                     //   }
+                        //   else if (topicSplit[3] == "ping")
+                        //   {
+                        //       DevicePing(topicSplit[2]);
+                        //   }
                     }
                 }
             }
@@ -255,7 +256,7 @@ namespace ExactFramework
             Debug.Log(topicSplit[2]);
             Debug.Log("New Device detected!");
 
-     
+
             foreach (TwinObject obj in twinObjects)
             {
                 if (obj.GetLinkStatus() == false)
@@ -270,7 +271,7 @@ namespace ExactFramework
                     }
                 }
             }
-          
+
             Debug.Log("No MAC_ID connection!");
             foreach (TwinObject obj1 in twinObjects)
             {
@@ -295,29 +296,29 @@ namespace ExactFramework
             Debug.Log("No device connection!");
             foreach (TwinObject obj2 in twinObjects)
             {
-                    if (obj2.GetLinkStatus() == false)
+                if (obj2.GetLinkStatus() == false)
+                {
+                    if (obj2.useConfigName && (obj2.GetConfigName() == topicSplit[3]))
                     {
-                        if (obj2.useConfigName && (obj2.GetConfigName() == topicSplit[3]))
-                        {
-                            Debug.Log("Config Connect!");
-                            obj2.LinkDevice(topicSplit[2]);
-                            obj2.SetDeviceName(topicSplit[4]);
-                            return;
-                        }
+                        Debug.Log("Config Connect!");
+                        obj2.LinkDevice(topicSplit[2]);
+                        obj2.SetDeviceName(topicSplit[4]);
+                        return;
                     }
+                }
             }
-          
+
 
             Debug.Log("Link not possible!");
-         //   SendDeviceMessage(topicSplit[2] + "/ping", new byte[] { 0 });
-         }
+            //   SendDeviceMessage(topicSplit[2] + "/ping", new byte[] { 0 });
+        }
 
-    ///<summary>
-    ///Checks the list of TwinObjects and returns the one with the corresponding device ID.
-    ///</summary>
-    ///<param name="deviceID">Device ID of twin object to get.</param>
-    ///<returns>Returns a TwinObject object with the ID.</returns>
-    private TwinObject GetObjectByID(string deviceID)
+        ///<summary>
+        ///Checks the list of TwinObjects and returns the one with the corresponding device ID.
+        ///</summary>
+        ///<param name="deviceID">Device ID of twin object to get.</param>
+        ///<returns>Returns a TwinObject object with the ID.</returns>
+        private TwinObject GetObjectByID(string deviceID)
         {
             foreach (TwinObject obj in twinObjects)
             {

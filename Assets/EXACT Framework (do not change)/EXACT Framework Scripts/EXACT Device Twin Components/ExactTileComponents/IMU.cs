@@ -1,4 +1,3 @@
-using ExactFramework;
 using UnityEngine;
 
 namespace ExactFramework
@@ -9,7 +8,7 @@ namespace ExactFramework
     ///</summary>
     public class IMU : DeviceComponent
     {
-        
+
         ///<summary>
         ///Rotation variable to store the current rotation of the IMU.
         ///</summary>
@@ -106,10 +105,13 @@ namespace ExactFramework
 
         public override void UpdateComponent(string eventType, byte[] payload)
         {
-            if(eventType == "tapped"){
+            if (eventType == "tapped")
+            {
                 Debug.Log("Tap event!");
                 OnTapped();
-            }else if(eventType == "rotation"){
+            }
+            else if (eventType == "rotation")
+            {
                 int roll = payload[0] + payload[1];
                 int pitch = payload[2] + payload[3];
                 int yaw = payload[4] + payload[5];

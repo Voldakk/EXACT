@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
-using System.Text;
+﻿using UnityEngine;
 using UnityEditor;
 
-namespace ExactFramework {
+using System.Text;
+
+namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a device wuth a ring light, time of flight distance sensor, tone player, and an inertial measurement unit.
     ///</summary>
@@ -129,7 +127,7 @@ namespace ExactFramework {
 
         public override void DeviceIsConnected()
         {
-        //    Debug.Log("connected now");
+            //    Debug.Log("connected now");
             ledRing.SetColor(ringInUnityColor);
             DeviceJustConnected();
         }
@@ -139,7 +137,8 @@ namespace ExactFramework {
 
         }
 
-        public virtual void OnTapped() {
+        public virtual void OnTapped()
+        {
         }
 
 
@@ -148,8 +147,8 @@ namespace ExactFramework {
             OnTapped();
         }
 
-		public virtual void EventFromGameLogic(string eventName, string eventData)
-        {  
+        public virtual void EventFromGameLogic(string eventName, string eventData)
+        {
 
         }
 
@@ -159,11 +158,11 @@ namespace ExactFramework {
         }
 
         public virtual void EventFromGameLogic(string eventName, Color c)
-		{
+        {
 
-		}
+        }
 
-		public void RFIDEnterCallback()
+        public void RFIDEnterCallback()
         {
             byte[] lastId = rfidReader.GetLastReadID();
             string rfidString = Encoding.UTF8.GetString(lastId, 0, lastId.Length);
@@ -177,8 +176,8 @@ namespace ExactFramework {
             OnRFIDLeave(rfidString);
         }
 
-// Callable from subclass:
-// -------------------------------
+        // Callable from subclass:
+        // -------------------------------
         public void SendEventToGameLogic(string eventName, string eventData)
         {
             if (exactGameLogic != null)
@@ -203,23 +202,25 @@ namespace ExactFramework {
             }
         }
 
-        public void SetColor(Color c) {
+        public void SetColor(Color c)
+        {
             ringInUnityColor.r = c.r;
             ringInUnityColor.g = c.g;
             ringInUnityColor.b = c.b;
-            if (ledRing != null) { 
+            if (ledRing != null)
+            {
                 ledRing.SetColor(c);
-             }
-             if (ledRingSprite != null)
-                {
-                   ledRingSprite.color = ringInUnityColor;
-                }
-         }
+            }
+            if (ledRingSprite != null)
+            {
+                ledRingSprite.color = ringInUnityColor;
+            }
+        }
 
         public Color GetColor()
-		{
-			return ringInUnityColor;
-		}
+        {
+            return ringInUnityColor;
+        }
 
         public void SetIndividualColor(Color color, int i)
         {
@@ -231,8 +232,8 @@ namespace ExactFramework {
 
         public void SetRingColor(Color c)
         {
-        //    Debug.Log("Set Ring color");
-        //    Debug.Log(c.ToString());
+            //    Debug.Log("Set Ring color");
+            //    Debug.Log(c.ToString());
             ringInUnityColor.r = c.r;
             ringInUnityColor.g = c.g;
             ringInUnityColor.b = c.b;
@@ -242,8 +243,8 @@ namespace ExactFramework {
             }
             if (ledRingSprite != null)
             {
-          //      Debug.Log("Set sprite color");
-          //      Debug.Log(ringInUnityColor.ToString());
+                //      Debug.Log("Set sprite color");
+                //      Debug.Log(ringInUnityColor.ToString());
                 ledRingSprite.color = ringInUnityColor;
             }
         }
@@ -270,7 +271,7 @@ namespace ExactFramework {
             }
             ringIntensity = intensity;
         }
-    
+
         public void StartFading(Color fadeColor, int from, int to, long pulseLengthMs)
         {
             Debug.Log("Tilebase fade");
@@ -293,15 +294,15 @@ namespace ExactFramework {
             ringInUnityColor.b = fadeColor.b;
             SetLedRingSpriteIntensity(fadeData.fromIntensity);
             fadeData.fading = true;
-            fadeData.startMillis = (long) (Time.time * 1000.0f);
+            fadeData.startMillis = (long)(Time.time * 1000.0f);
         }
 
 
         public void StartPulse(Color fadeColor, int from, int to, long pulseLengthMs)
         {
-    
-                ledRing.StartPulse(fadeColor, from, to, pulseLengthMs);
-     
+
+            ledRing.StartPulse(fadeColor, from, to, pulseLengthMs);
+
         }
 
         public void StopPulse()

@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExactFramework;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-
-namespace ExactFramework {
+namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a device
     ///</summary>
@@ -40,12 +36,12 @@ namespace ExactFramework {
         }
 
         public override void EventFromGameLogic(string eventName, string eventData)
-        {  
+        {
             if (eventName == "MakeActive")
             {
                 tileIsActive = true;
                 this.PlayTone(500, 50);
-				StartFading(Color.red, 0, 70, 3000);
+                StartFading(Color.red, 0, 70, 3000);
 
             }
             else if (eventName == "MakePassive")

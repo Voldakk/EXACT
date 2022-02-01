@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace ExactFramework {
+﻿namespace ExactFramework
+{
     ///<summary>
     ///Digital representation of a physical arduino button.
     ///</summary>
-    public class Button : DeviceComponent {
-
+    public class Button : DeviceComponent
+    {
         ///<summary>
         ///State of the button, whether it's pressed down or not.
         ///</summary>
@@ -30,7 +27,8 @@ namespace ExactFramework {
         }
 
         //Unity start method used for initialization
-        public override void Start(){
+        public override void Start()
+        {
             base.Start(); //DeviceComponent's start.
             state = false;
             pressed = false;
@@ -88,10 +86,14 @@ namespace ExactFramework {
 
         public override void UpdateComponent(string eventType, byte[] payload)
         {
-            if(eventType == "state"){
-                if(payload[0] == 1){
+            if (eventType == "state")
+            {
+                if (payload[0] == 1)
+                {
                     OnButtonPress();
-                }else{
+                }
+                else
+                {
                     OnButtonRelease();
                 }
             }

@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using ExactFramework;
-
-namespace ExactFramework
+﻿namespace ExactFramework
 {
     public class NestedTwinObject : TwinObject
     {   

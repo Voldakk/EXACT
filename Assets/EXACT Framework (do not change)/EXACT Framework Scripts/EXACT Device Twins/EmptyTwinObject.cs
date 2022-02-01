@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace ExactFramework
-{   
+﻿namespace ExactFramework
+{
     ///<summary>
     /// Empty shell of a TwinObject subclass. 
     ///</summary>

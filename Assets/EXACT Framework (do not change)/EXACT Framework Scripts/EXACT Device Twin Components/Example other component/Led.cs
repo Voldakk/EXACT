@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ExactFramework
 {
@@ -71,7 +69,7 @@ namespace ExactFramework
                 }
             }
         }
-        
+
         ///<summary>
         ///Gets the time delay set for the blinking of the LED
         ///</summary>
