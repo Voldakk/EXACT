@@ -1,0 +1,65 @@
+﻿EXACT MQTT protocol.  (Dag Svanaes, 2019)
+
+This protocol should be robust to lost connections.
+
+Each device has a unique mac address <mac>.
+
+Device side:
+-------------
+On startup, keep looking until you find the broker: 
+  Device connects to MQTT broker with Last Will = "exact/disconnected/<mac>"
+    (Last will time = 2 seconds).
+  Subscribe: "exact/<mac>/#"          -- Messages to this device only.
+  Subscribe: "exact/all_devices/#"    -- Messages to all devices.
+  Publish:   "exact/connected/<mac>/<device_type>/<device_id>"  
+              -- Tell unity that you are connected to broker.
+
+On lost connection to broker: 
+  Reset all component, like the led ring and sound.
+  Keep looking until detected. Then do as startup above.
+
+On message "exact/all_devices/are_you_connected":  -- Initiated by unity.
+  Publish:   "exact/connected/<mac>/<device_type>/<device_id>" 
+
+On message: "exact/<mac>/ping":       -- Ping request to device.
+  Publish:   "exact/ping_ack/<mac>"   -- Ping acknowledged from device.
+
+On message: "exact/all_devices/reset_all_components":  -- Unity game ended
+
+  Reset all component, like the led ring and sound.
+
+On message: "exact/<mac>/action/<component>/<action_name>/<action_data>"  
+  Decode the action data, and do the action on the component.
+
+On message: "exact/<mac>/get/<component>/<variable_name>"  
+  Get data value from the component.
+  Publish: "exact/value/<mac>/<component>/<variable_name><value>"
+
+On an event happening to the compnent, like a button component pressed.
+  Publish  "exact/<mac>/event/<component>/<event_name>/<event_data>" 
+
+UNITY side:
+---------------
+On startup, keep looking until you find the broker: 
+  Unity connects to MQTT broker with Last Will = "exact/all_devices/reset_all_component"
+  Subscribe: "exact/#"          -- Everything is of interest!
+  Publish:   "exact/all_devices/are_you_connected"  
+              -- Tell all devices connected to report back who they are, type and id.
+
+On "exact/connected/<mac>/<device_type>/<device_id>" -- Device wants to connect.
+  Find the right twin object, link it to the physical device and set it to linked.
+
+On "exact/disconnected/<mac>":  -- A device lost connection. This is the last will from broker.
+  Set this device twin to not be linked to a physical device.
+
+On an action a twin object: 
+  Publish: "exact/<mac>/action/<component>/<action_name>/<action_data>"  
+  
+On request for values from a twin object: 
+  Publish: "exact/<mac>/get/<component>/<variable_name>"  
+
+On message "exact/value/<mac>/<component>/<variable_name><value>":
+  Set that value in the twin object
+
+On an event happening to the compnent, like a button component pressed.
+  Publish  "exact/<mac>/event/<component>/<event_name>/<event_data>" 
