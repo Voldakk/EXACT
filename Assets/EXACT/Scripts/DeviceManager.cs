@@ -41,7 +41,7 @@ namespace Exact
 
         void Update()
         {
-            if (!waitForAllConnected || mqttHandler.AllDevicesConnected())
+            if (mqttHandler != null && (!waitForAllConnected || mqttHandler.AllDevicesConnected()))
             {
                 mqttHandler.Update();
             }

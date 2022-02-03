@@ -1,16 +1,23 @@
 using UnityEngine;
 using UnityEngine.Events;
+using NaughtyAttributes;
 
 namespace Exact.Example
 {
     [RequireComponent(typeof(Device))]
     public class IMU : DeviceComponent
     {
-        public override string GetComponentType()
-        {
-            return "imu";
-        }
+        public override string GetComponentType() { return "imu"; }
+
+        [SerializeField, OnValueChanged("OnSensitivityChanged"), Range(0, 1)]
+        float sensitivity = 0.025f;
+
         public UnityEvent OnTap;
+
+        public override void OnConnect()
+        {
+            SetSensitivity(sensitivity, true);
+        }
 
         public override void OnEvent(string eventType, byte[] payload)
         {
@@ -23,10 +30,37 @@ namespace Exact.Example
             }
         }
 
+        /// <summary>
+        /// Trigger a tap event.
+        /// Also called when a tap is detected by the physical device.
+        /// </summary>
         public void Tap()
         {
             Debug.Log("Tap!");
             OnTap.Invoke();
+        }
+
+        /// <summary>
+        /// Sets the sensitivity for the IMU when detecting a tap.
+        /// </summary>
+        /// <param name="sensitivity">The new sensitivity as a value from 0 to 1.</param>
+        /// <param name="forceUpdate">Whether the physical device is updated even if the sensitivity has not changed.</param>
+        public void SetSensitivity(float sensitivity, bool forceUpdate = false)
+        {
+            if (this.sensitivity != sensitivity || forceUpdate)
+            {
+                this.sensitivity = sensitivity;
+                SendAction("set_sensitivity", Mathf.RoundToInt(sensitivity * 2046 + 1));
+            }
+        }
+
+        //
+        // Value changed callbacks
+        //
+
+        private void OnSensitivityChanged()
+        {
+            SetSensitivity(sensitivity, true);
         }
     }
 }

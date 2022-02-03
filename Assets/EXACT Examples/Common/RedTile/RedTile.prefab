@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 5845766260964558764}
   - component: {fileID: 5845766260964558755}
   - component: {fileID: 6248777810409436740}
-  - component: {fileID: 5278793315548923055}
+  - component: {fileID: 4893909724474844118}
   m_Layer: 0
   m_Name: RedTile
   m_TagString: Untagged
@@ -351,7 +351,7 @@ Transform:
   m_GameObject: {fileID: 5845766260964558767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 7477712820499918436}
   m_Father: {fileID: 0}
@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniformColor: {r: 0, g: 0, b: 0, a: 1}
+  intensity: 0.3
+  rotation: 0
   numLeds: 24
   colorRing: {fileID: 0}
 --- !u!114 &5845766260964558755
@@ -408,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ba8b79c9a1a04f9293b89410a0501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensitivity: 0.025
   OnTap:
     m_PersistentCalls:
       m_Calls: []
@@ -423,31 +426,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb79c5ed9bca034c92a084d3e84a259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volume: 1
   sampleRate: 44100
   waveLengthInSeconds: 2
---- !u!61 &5278793315548923055
-BoxCollider2D:
+--- !u!114 &4893909724474844118
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5845766260964558767}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3694baf0deb3a9643bf01d040004bbea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readerEnabled: 0
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []

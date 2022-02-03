@@ -8,5 +8,6 @@ namespace Exact.Example
         public abstract void SetUniformColor(Color color);
         public abstract void SetSegmentColor(int segment, Color color);
         public abstract Color GetColor(int segment);
+        public abstract void SetIntensity(float intensity);
     }
 }

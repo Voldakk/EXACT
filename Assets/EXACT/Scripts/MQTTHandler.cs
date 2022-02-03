@@ -29,7 +29,7 @@ namespace Exact
         private List<Device> devices = new List<Device>();
 
         ///<summary>
-        /// Message buffer list used for incoming messages
+        /// Message buffers
         ///</summary>
         private Queue<MessagePair> messageBufferIn = new Queue<MessagePair>();
         private Queue<MessagePair> messageBufferOut = new Queue<MessagePair>();

@@ -12,7 +12,9 @@ namespace Exact.Example
         [SerializeField]
         float ledSize = 0.4f;
 
+        float intensity = 1.0f;
         List<SpriteRenderer> segments = new List<SpriteRenderer>();
+        List<Color> segmentColors = new List<Color>();
 
         public override void SetNumberOfSegments(int num)
         {
@@ -22,6 +24,7 @@ namespace Exact.Example
                 for (int i = segments.Count; i < num; i++)
                 {
                     segments.Add(Instantiate(segmentPrefab, transform).GetComponent<SpriteRenderer>());
+                    segmentColors.Add(Color.black);
                 }
             }
             else
@@ -29,6 +32,7 @@ namespace Exact.Example
                 for (int i = segments.Count - 1; i >= num; i--)
                 {
                     segments.RemoveAt(i);
+                    segmentColors.RemoveAt(i);
                 }
             }
 
@@ -50,14 +54,21 @@ namespace Exact.Example
                 Debug.LogError("Index out of range");
                 return;
             }
+            segmentColors[segment] = color;
+            color *= intensity;
+            color.a = 1;
             segments[segment].color = color;
         }
 
         public override void SetUniformColor(Color color)
         {
-            foreach (var segment in segments)
+            Color displayColor = color * intensity;
+            displayColor.a = 1;
+
+            for (int i = 0; i < segments.Count; i++)
             {
-                segment.color = color;
+                segmentColors[i] = color;
+                segments[i].color = displayColor;
             }
         }
 
@@ -68,7 +79,19 @@ namespace Exact.Example
                 Debug.LogError("Index out of range");
                 return Color.black;
             }
-            return segments[segment].color;
+            return segmentColors[segment];
+        }
+
+        public override void SetIntensity(float intensity)
+        {
+            this.intensity = intensity;
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                Color displayColor = segmentColors[i] * intensity;
+                displayColor.a = 1;
+                segments[i].color = displayColor;
+            }
         }
     }
 }

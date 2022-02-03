@@ -176,15 +176,11 @@ namespace Exact
         ///</summary>
         public void SendMessage(string subtopic, byte[] payload)
         {
-            bool error = false;
-            if (mqttHandler == null) { error = true; Debug.LogError("No MQTT handler"); }
-            if (string.IsNullOrEmpty(deviceId)) { error = true; Debug.LogError("No device id"); }
-            if (!linked) { error = true; Debug.LogError("Not linked"); }
+            if (mqttHandler == null) { Debug.LogWarning("No MQTT handler"); return; }
+            if (string.IsNullOrEmpty(deviceId)) { Debug.LogWarning("No device id"); return; }
+            if (!linked) { Debug.LogWarning("Not linked"); return; }
 
-            if (!error)
-            {
-                mqttHandler.SendMessage(string.Format("exact/{0}/{1}", deviceId, subtopic), payload);
-            }
+            mqttHandler.SendMessage(string.Format("exact/{0}/{1}", deviceId, subtopic), payload);
         }
 
         ///<summary>

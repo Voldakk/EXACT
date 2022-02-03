@@ -9,7 +9,7 @@ namespace Exact
     public abstract class DeviceComponent : MonoBehaviour
     {
         ///<summary>
-        /// Twin object variable reference. Used by component to call message sending, etc.
+        /// Twin device variable reference. Used by component to call message sending, etc.
         ///</summary>
         public Device device { get; private set; }
 
@@ -28,16 +28,15 @@ namespace Exact
             componentType = GetComponentType();
         }
 
-        public virtual void OnConnect()
-        {
+        /// <summary>
+        /// Called when the device is connected.
+        /// </summary>
+        public virtual void OnConnect() { }
 
-        }
-
-        public virtual void OnDisconnect()
-        {
-
-        }
-
+        /// <summary>
+        /// Called when the device is disconnected
+        /// </summary>
+        public virtual void OnDisconnect() { }
 
         ///<summary>
         /// Called by the twin device on incoming messages to update the component. 
@@ -56,7 +55,10 @@ namespace Exact
 
         protected void SendAction(string action, byte[] payload)
         {
-            device.SendAction(componentType, action, payload);
+            if (Application.isPlaying)
+            {
+                device.SendAction(componentType, action, payload);
+            }
         }
 
         protected void SendAction(string action, string payload)
@@ -66,13 +68,18 @@ namespace Exact
 
         protected void SendAction(string action, int payload)
         {
-            SendAction(action, new byte[] { (byte)payload });
+            SendAction(action, payload.ToString());
         }
 
         protected void SendAction(string action, bool payload)
         {
             int value = payload ? 1 : 0;
-            SendAction(action, new byte[] { (byte)value });
+            SendAction(action, value);
+        }
+
+        protected void SendAction(string action)
+        {
+            SendAction(action, 0);
         }
     }
 }

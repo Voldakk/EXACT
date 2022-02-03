@@ -1,4 +1,5 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 using System.Collections;
 
@@ -7,18 +8,17 @@ namespace Exact.Example
     [RequireComponent(typeof(Device))]
     public class TonePlayer : DeviceComponent
     {
-        public override string GetComponentType()
-        {
-            return "tone_player";
-        }
+        public override string GetComponentType() { return "tone_player"; }
 
-        private int frequency;
+        [SerializeField, OnValueChanged("OnVolumeChanged"), Range(0, 1)]
+        float volume = 1;
 
         public float sampleRate = 44100;
         public float waveLengthInSeconds = 2.0f;
 
         AudioSource audioSource;
         int timeIndex = 0;
+        int frequency;
 
         protected override void Awake()
         {
@@ -28,6 +28,13 @@ namespace Exact.Example
             audioSource.playOnAwake = false;
             audioSource.spatialBlend = 0; // Force 2D sound
             audioSource.Stop(); // Avoids the audiosource starting to play automatically
+
+            OnConnect();
+        }
+
+        public override void OnConnect()
+        {
+            SetVolume(volume, true);
         }
 
         ///<summary>
@@ -38,7 +45,8 @@ namespace Exact.Example
         ///<param name="duration">Duration of the tone to play in seconds.</param>
         public void PlayTone(int frequency, float duration)
         {
-            string payload = frequency.ToString() + "/" + ((int)(duration * 1000)).ToString();
+            this.frequency = frequency;
+            string payload = frequency.ToString() + "/" + Mathf.RoundToInt(duration * 1000).ToString();
             SendAction("tone", payload);
             audioSource.Play();
             StartCoroutine(StopAudioAfterDuration(duration));
@@ -53,7 +61,21 @@ namespace Exact.Example
             audioSource.Stop();
         }
 
-        IEnumerator StopAudioAfterDuration(float duration)
+        /// <summary>
+        /// Sets the volume of the tone player
+        /// </summary>
+        /// <param name="volume">The volume as a value from 0 to 1</param>
+        public void SetVolume(float volume, bool forceUpdate = false)
+        {
+            if (this.volume != volume || forceUpdate)
+            {
+                this.volume = volume;
+                audioSource.volume = volume;
+                SendAction("set_volume", Mathf.RoundToInt(volume * 100));
+            }
+        }
+
+        private IEnumerator StopAudioAfterDuration(float duration)
         {
             yield return new WaitForSeconds(duration);
             audioSource.Stop();
@@ -63,7 +85,7 @@ namespace Exact.Example
         /// If OnAudioFilterRead is implemented, Unity will insert a custom filter into the audio DSP chain.
         /// OnAudioFilterRead is called every time a chunk of audio is sent to the filter.
         /// </summary>
-        void OnAudioFilterRead(float[] data, int channels)
+        private void OnAudioFilterRead(float[] data, int channels)
         {
             for (int i = 0; i < data.Length; i += channels)
             {
@@ -83,9 +105,18 @@ namespace Exact.Example
             }
         }
 
-        public float CreateSine(int timeIndex, int frequency, float sampleRate)
+        private float CreateSine(int timeIndex, int frequency, float sampleRate)
         {
             return Mathf.Sin(2 * Mathf.PI * timeIndex * frequency / sampleRate);
+        }
+
+        //
+        // Value changed callbacks
+        //
+
+        private void OnVolumeChanged()
+        {
+            SetVolume(volume, true);
         }
     }
 }
