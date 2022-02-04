@@ -13,13 +13,6 @@ namespace Exact.Example
         [SerializeField, OnValueChanged("OnVolumeChanged"), Range(0, 1)]
         float volume = 1;
 
-        public float sampleRate = 44100;
-        public float waveLengthInSeconds = 2.0f;
-
-        AudioSource audioSource;
-        int timeIndex = 0;
-        int frequency;
-
         protected override void Awake()
         {
             base.Awake();
@@ -29,7 +22,7 @@ namespace Exact.Example
             audioSource.spatialBlend = 0; // Force 2D sound
             audioSource.Stop(); // Avoids the audiosource starting to play automatically
 
-            OnConnect();
+            audioSource.volume = volume;
         }
 
         public override void OnConnect()
@@ -81,6 +74,26 @@ namespace Exact.Example
             audioSource.Stop();
         }
 
+        //
+        // Value changed callbacks
+        //
+
+        private void OnVolumeChanged()
+        {
+            SetVolume(volume, true);
+        }
+
+        //
+        // Audio player and sine wave generator 
+        //
+
+        public float sampleRate = 44100;
+        public float waveLengthInSeconds = 2.0f;
+
+        AudioSource audioSource;
+        int timeIndex = 0;
+        int frequency;
+
         /// <summary>
         /// If OnAudioFilterRead is implemented, Unity will insert a custom filter into the audio DSP chain.
         /// OnAudioFilterRead is called every time a chunk of audio is sent to the filter.
@@ -108,15 +121,6 @@ namespace Exact.Example
         private float CreateSine(int timeIndex, int frequency, float sampleRate)
         {
             return Mathf.Sin(2 * Mathf.PI * timeIndex * frequency / sampleRate);
-        }
-
-        //
-        // Value changed callbacks
-        //
-
-        private void OnVolumeChanged()
-        {
-            SetVolume(volume, true);
         }
     }
 }

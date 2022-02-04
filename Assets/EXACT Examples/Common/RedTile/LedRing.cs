@@ -31,8 +31,8 @@ namespace Exact.Example
             base.Awake();
 
             colorRing.SetNumberOfSegments(numLeds);
-
-            OnConnect();
+            colorRing.SetUniformColor(uniformColor);
+            colorRing.SetIntensity(intensity);
         }
 
         public override void OnConnect()
@@ -271,12 +271,12 @@ namespace Exact.Example
             StopAllCoroutines();
         }
 
-        IEnumerator RotationRoutine(float speed)
+        IEnumerator RotationRoutine(float rotationTime)
         {
             colorRing.transform.rotation = Quaternion.identity;
             while (true)
             {
-                colorRing.transform.Rotate(Vector3.back * Time.deltaTime * speed * 360);
+                colorRing.transform.Rotate(Vector3.back * 360 * Time.deltaTime / rotationTime);
                 yield return null;
             }
         }

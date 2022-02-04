@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Exact
@@ -34,7 +35,7 @@ namespace Exact
         ///<summary>
         /// The state of the link between Digital Twin device(this) and physical device.
         ///</summary>
-        public bool linked;
+        public bool linked = false;
 
         public UnityEvent OnConnect;
         public UnityEvent OnDisconnect;
@@ -56,23 +57,32 @@ namespace Exact
         {
             if (this.linked == linked) { return; }
 
-            this.linked = linked;
+            StopAllCoroutines();
+
             if (linked)
             {
-                foreach (var comp in deviceComponents.Values)
-                {
-                    comp.OnConnect();
-                }
-                OnConnect.Invoke();
+                StartCoroutine(DelayedOnConnect());
             }
             else
             {
+                this.linked = false;
                 foreach (var comp in deviceComponents.Values)
                 {
                     comp.OnDisconnect();
                 }
                 OnDisconnect.Invoke();
             }
+        }
+
+        IEnumerator DelayedOnConnect()
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            linked = true;
+            foreach (var comp in deviceComponents.Values)
+            {
+                comp.OnConnect();
+            }
+            OnConnect.Invoke();
         }
 
         ///<summary>

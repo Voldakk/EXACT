@@ -360,36 +360,10 @@ namespace Exact
         }
 
         ///<summary>
-        /// Returns the list of devices in the MQTT Handler.
-        ///</summary>
-        ///<returns>List of devices</returns>
-        public List<Device> GetDeviceList()
-        {
-            return devices;
-        }
-
-        ///<summary>
-        /// Returns the list of twin devices that have been connected to a physical device.
-        ///</summary>
-        ///<returns>List of connected devices</returns>
-        public List<Device> GetConnectedDevices()
-        {
-            var list = new List<Device>();
-            foreach (Device device in devices)
-            {
-                if (device.GetLinkStatus())
-                {
-                    list.Add(device);
-                }
-            }
-            return list;
-        }
-
-        ///<summary>
-        /// Adds a Twin Object to the list of TwinObjects to be controlled and updated by the MQTT Handler.
+        /// Adds a device to the list of devices to be controlled and updated by the MQTT Handler.
         ///</summary>
         ///<param name="device">A TwinObject object.</param>
-        public void AddTwinObject(Device device)
+        public void AddDevice(Device device)
         {
             device.SetMQTTHandler(this);
             if (device.useDeviceName)
@@ -403,18 +377,13 @@ namespace Exact
         }
 
         ///<summary>
-        /// Whether all twin devices has connected to a physical device.
+        /// Returns the list of devices in the MQTT Handler.
         ///</summary>
-        public bool AllDevicesConnected()
+        ///<returns>List of devices</returns>
+        public List<Device> GetDeviceList()
         {
-            foreach (var device in devices)
-            {
-                if (!device.GetLinkStatus())
-                {
-                    return false;
-                }
-            }
-            return true;
+            return devices;
         }
+
     }
 }

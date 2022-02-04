@@ -1011,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deviceManager: {fileID: 2058539955}
+  waitForAllConnected: 1
 --- !u!4 &2058539954
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,8 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d09755b1b42914991e9a23cac61391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MQTTServerAddress: 192.168.0.100
-  waitForAllConnected: 0
+  settings: {fileID: 11400000, guid: bb484f93af93a4841925c037c44f8f8d, type: 2}
 --- !u!1 &2098103983 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5845766260964558767, guid: 402d6c0c40eb88846813ebd89b58f7b3, type: 3}

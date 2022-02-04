@@ -1,4 +1,5 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 using System.Collections;
 
@@ -6,8 +7,11 @@ namespace Exact.Example
 {
     public class FollowTheRedDot : MonoBehaviour
     {
+        [SerializeField, Required]
+        DeviceManager deviceManager;
+
         [SerializeField]
-        private DeviceManager deviceManager;
+        bool waitForAllConnected = false;
 
         Device active = null;
 
@@ -18,14 +22,22 @@ namespace Exact.Example
 
         IEnumerator Startup()
         {
+            if(waitForAllConnected)
+            {
+                Debug.Log("Waiting for devices");
+                while (!deviceManager.AllDevicesConnected())
+                {
+                    yield return null;
+                }
+            }
+            
             while (active == null)
             {
                 yield return null;
-                var devices = deviceManager.GetDevicesWithComponent<Device>();
+                var devices = deviceManager.GetConnectedDevices();
                 if (devices.Count > 0)
                 {
-                    active = devices[0];
-                    active.GetComponent<LedRing>().SetColor(Color.red);
+                    SetActive(devices[0]);
                 }
             }
             Debug.Log("Startup complete");
@@ -42,7 +54,12 @@ namespace Exact.Example
             devices.Remove(active);
 
             int i = Random.Range(0, devices.Count);
-            active = devices[i];
+            SetActive(devices[i]);
+        }
+
+        private void SetActive(Device device)
+        {
+            active = device;
             active.GetComponent<LedRing>().SetColor(Color.red);
             active.GetComponent<TonePlayer>().PlayTone(500, 0.1f);
         }
