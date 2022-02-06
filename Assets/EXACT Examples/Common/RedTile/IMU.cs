@@ -14,7 +14,7 @@ namespace Exact.Example
 
         public UnityEvent OnTap;
 
-        public override void OnConnect()
+        public void OnConnect()
         {
             SetSensitivity(sensitivity, true);
         }

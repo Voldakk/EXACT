@@ -35,7 +35,7 @@ namespace Exact.Example
             colorRing.SetIntensity(intensity);
         }
 
-        public override void OnConnect()
+        public void OnConnect()
         {
             SetColor(uniformColor, true);
             SetIntensity(intensity, true);
@@ -273,10 +273,13 @@ namespace Exact.Example
 
         IEnumerator RotationRoutine(float rotationTime)
         {
-            colorRing.transform.rotation = Quaternion.identity;
+            float rot = 0;
+            //colorRing.transform.rotation = Quaternion.identity;
             while (true)
             {
-                colorRing.transform.Rotate(Vector3.back * 360 * Time.deltaTime / rotationTime);
+                rot += 360 * Time.deltaTime / rotationTime;
+                colorRing.SetRotation(rot);
+                //colorRing.transform.Rotate(Vector3.back * 360 * Time.deltaTime / rotationTime);
                 yield return null;
             }
         }

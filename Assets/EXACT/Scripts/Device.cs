@@ -66,10 +66,7 @@ namespace Exact
             else
             {
                 this.linked = false;
-                foreach (var comp in deviceComponents.Values)
-                {
-                    comp.OnDisconnect();
-                }
+                transform.SendMessage("OnDisconnect");
                 OnDisconnect.Invoke();
             }
         }
@@ -78,10 +75,7 @@ namespace Exact
         {
             yield return new WaitForSecondsRealtime(0.1f);
             linked = true;
-            foreach (var comp in deviceComponents.Values)
-            {
-                comp.OnConnect();
-            }
+            transform.SendMessage("OnConnect");
             OnConnect.Invoke();
         }
 

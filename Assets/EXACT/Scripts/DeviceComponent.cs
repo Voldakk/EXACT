@@ -28,16 +28,10 @@ namespace Exact
             componentType = GetComponentType();
         }
 
-        /// <summary>
-        /// Called when the device is connected.
-        /// </summary>
-        public virtual void OnConnect() { }
-
-        /// <summary>
-        /// Called when the device is disconnected
-        /// </summary>
-        public virtual void OnDisconnect() { }
-
+        ///
+        /// OnConnect and OnDisconnect are broadcast by Unity's SendMessage function whenever the physical device connects or disconnects
+        ///
+        
         ///<summary>
         /// Called by the twin device on incoming messages to update the component. 
         ///</summary>
@@ -51,7 +45,6 @@ namespace Exact
         ///<param name="eventType">Name of the event type on the component.</param>
         ///<param name="payload">Payload of the MQTT message</param>
         public virtual void OnEvent(string eventType, byte[] payload) { }
-
 
         protected void SendAction(string action, byte[] payload)
         {

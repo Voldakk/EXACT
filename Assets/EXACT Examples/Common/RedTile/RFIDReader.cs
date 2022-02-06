@@ -21,7 +21,7 @@ namespace Exact.Example
         /// </summary>
         public UnityEvent<string> OnEnter, OnExit;
 
-        public override void OnConnect()
+        public void OnConnect()
         {
             SetReaderEnabled(readerEnabled, true);
         }
@@ -49,7 +49,7 @@ namespace Exact.Example
         {
             Debug.Log("RFID enter: " + tag);
             lastReadId = tag;
-            OnEnter?.Invoke(tag);
+            OnEnter.Invoke(tag);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Exact.Example
         public void Exit(string tag)
         {
             Debug.Log("RFID exit: " + tag);
-            OnExit?.Invoke(tag);
+            OnExit.Invoke(tag);
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace Exact.Example
             audioSource.volume = volume;
         }
 
-        public override void OnConnect()
+        public void OnConnect()
         {
             SetVolume(volume, true);
         }

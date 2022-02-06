@@ -8,7 +8,7 @@ namespace Exact.Example
     public class FollowTheRedDot : MonoBehaviour
     {
         [SerializeField, Required]
-        DeviceManager deviceManager;
+        ExactManager exactManager;
 
         [SerializeField]
         bool waitForAllConnected = false;
@@ -25,7 +25,7 @@ namespace Exact.Example
             if(waitForAllConnected)
             {
                 Debug.Log("Waiting for devices");
-                while (!deviceManager.AllDevicesConnected())
+                while (!exactManager.AllDevicesConnected())
                 {
                     yield return null;
                 }
@@ -34,7 +34,7 @@ namespace Exact.Example
             while (active == null)
             {
                 yield return null;
-                var devices = deviceManager.GetConnectedDevices();
+                var devices = exactManager.GetConnectedDevices();
                 if (devices.Count > 0)
                 {
                     SetActive(devices[0]);
@@ -47,7 +47,7 @@ namespace Exact.Example
         {
             if (device != active) { return; }
 
-            var devices = deviceManager.GetDevicesWithComponent<Device>();
+            var devices = exactManager.GetDevicesWithComponent<Device>();
             if (devices.Count <= 1) { return; }
 
             active.GetComponent<LedRing>().SetColor(Color.black);

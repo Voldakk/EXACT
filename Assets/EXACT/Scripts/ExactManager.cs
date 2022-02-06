@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Exact
 {
-    public class DeviceManager : MonoBehaviour
+    public class ExactManager : MonoBehaviour
     {
         [SerializeField, Required]
         Settings settings;
