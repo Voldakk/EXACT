@@ -106,6 +106,12 @@ namespace Exact.Example
             }
         }
 
+        public void SetColorAndIntensity(Color color, float intensity, bool forceUpdate = false)
+        {
+            SetColor(color, forceUpdate);
+            SetIntensity(intensity, forceUpdate);  
+        }
+
         //
         //  Fading
         //
@@ -119,6 +125,8 @@ namespace Exact.Example
         /// <param name="duration">The time in seconds spent fading from the first intensity to the other.</param>
         public void StartFading(Color color, float fromIntensity, float toIntensity, float duration)
         {
+            uniform = false;
+
             int r = Mathf.RoundToInt(color.r * 255);
             int g = Mathf.RoundToInt(color.g * 255);
             int b = Mathf.RoundToInt(color.b * 255);
@@ -182,6 +190,8 @@ namespace Exact.Example
         /// <param name="pulseLength">The time in seconds spent fading from the first intensity to the other and back to the first again./param>
         public void StartPulsing(Color color, float fromIntensity, float toIntensity, float pulseLength)
         {
+            uniform = false;
+
             int r = Mathf.RoundToInt(color.r * 255);
             int g = Mathf.RoundToInt(color.g * 255);
             int b = Mathf.RoundToInt(color.b * 255);
@@ -240,6 +250,8 @@ namespace Exact.Example
         /// <param name="rotation">The rotation in degrees</param>
         public void SetRotation(int rotation, bool forceUpdate = false)
         {
+            uniform = false;
+
             if (this.rotation != rotation || forceUpdate)
             {
                 this.rotation = rotation;
@@ -255,6 +267,8 @@ namespace Exact.Example
         /// <param name="rotationTime">The time in seconds for one rotation</param>
         public void StartRotating(float rotationTime)
         {
+            uniform = false;
+
             int ms = Mathf.RoundToInt(rotationTime * 1000);
             SendAction("start_rotating", ms);
 

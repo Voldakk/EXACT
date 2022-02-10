@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9ba8b79c9a1a04f9293b89410a0501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 0.025
+  sensitivity: 0.975
   OnTap:
     m_PersistentCalls:
       m_Calls: []

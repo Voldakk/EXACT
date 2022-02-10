@@ -10,7 +10,7 @@ namespace Exact.Example
         public override string GetComponentType() { return "imu"; }
 
         [SerializeField, OnValueChanged("OnSensitivityChanged"), Range(0, 1)]
-        float sensitivity = 0.025f;
+        float sensitivity = 0.975f;
 
         public UnityEvent OnTap;
 
@@ -50,7 +50,7 @@ namespace Exact.Example
             if (this.sensitivity != sensitivity || forceUpdate)
             {
                 this.sensitivity = sensitivity;
-                SendAction("set_sensitivity", Mathf.RoundToInt(sensitivity * 2046 + 1));
+                SendAction("set_sensitivity", Mathf.RoundToInt((1.0f - sensitivity) * 2046 + 1));
             }
         }
 

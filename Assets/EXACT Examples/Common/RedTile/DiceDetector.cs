@@ -10,7 +10,7 @@ namespace Exact.Example
         [SerializeField]
         List<string> tags = new List<string>(6);
 
-        int _number = 0;
+        int _number = -1;
         public int Number { get => _number; private set { _number = value; OnDiceUpdate.Invoke(_number); } }
 
         public UnityEvent<int> OnDiceUpdate;
@@ -20,7 +20,7 @@ namespace Exact.Example
 
         public void OnDisconnect()
         {
-            Number = 0;
+            Number = -1;
             activeTag = null;
             inactiveTags.Clear();
         }
@@ -47,7 +47,7 @@ namespace Exact.Example
                 if(inactiveTags.Count == 0)
                 {
                     activeTag = null;
-                    Number = 0;
+                    Number = -1;
                 }
                 else
                 {

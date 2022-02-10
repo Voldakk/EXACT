@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace Exact.Example
 {
     [RequireComponent(typeof(Text))]
-    public class DiceReader : MonoBehaviour
+    public class NumberText : MonoBehaviour
     {
         Text text;
 
@@ -14,9 +14,9 @@ namespace Exact.Example
             text.text = "";
         }
 
-        public void SetDiceNumber(int number)
+        public void SetNumber(int number)
         {
-            if (number < 1 || number > 6) 
+            if (number < 0) 
             { 
                 text.text = ""; 
             }
