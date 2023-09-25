@@ -24,7 +24,7 @@ namespace Exact
         /// </summary>
         protected virtual void Awake()
         {
-            device = GetComponent<Device>();
+            device = GetComponentInParent<Device>();
             componentType = GetComponentType();
         }
 

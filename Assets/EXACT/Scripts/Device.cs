@@ -165,7 +165,7 @@ namespace Exact
 
         private void FindDeviceComponents()
         {
-            var comps = GetComponents<DeviceComponent>();
+            var comps = GetComponentsInChildren<DeviceComponent>();
             foreach (var comp in comps)
             {
                 deviceComponents.Add(comp.GetComponentType(), comp);

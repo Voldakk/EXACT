@@ -34,6 +34,7 @@ namespace Exact.Example
         /// Trigger a tap event.
         /// Also called when a tap is detected by the physical device.
         /// </summary>
+        [Button]
         public void Tap()
         {
             Debug.Log("Tap!");

@@ -110,7 +110,9 @@ namespace Exact
         }
 
         ///<summary>
-        ///MQTT message handler. Handles incoming MQTT messages and creates a message pair object with the topic and payload. The message pair is added to the msgBuffer object which is called in the standard unity thread for messages to be further handled.
+        /// MQTT message handler. 
+        /// Handles incoming MQTT messages and creates a message pair object with the topic and payload. 
+        /// The message pair is added to the messageBufferIn object which is called in the standard unity thread for messages to be further handled.
         ///<summary>
         ///<param name="sender"></param>
         ///<param name="e">Message object created by the MQTT client. Contains the topic and payload.</param>
@@ -172,11 +174,11 @@ namespace Exact
         /// Called when a new device connects. Extracts the configuration and ID of the device.
         /// If the ID exists, it reconnects the device, if not it checks to find a configuration that fits and links that.
         ///</summary>
-        ///<param name="topicSplit">String array of the split topic from the MQTT connect message</param>
-        /// unity/connect/devicemacid/devicetype/devicename
+        ///<param name="deviceId">The id of the connected device</param>
+        ///<param name="subTopic">String array of the split topic from the MQTT connect message</param>
         private void DeviceConnect(string deviceId, string[] subTopic)
         {
-            // exact/connected/<mac> / <device_type>/<device_name>
+            // exact/connected/id/type/name
             string deviceType = subTopic.Length > 0 ? subTopic[0] : "";
             string deviceName = subTopic.Length > 1 ? subTopic[1] : "";
 
